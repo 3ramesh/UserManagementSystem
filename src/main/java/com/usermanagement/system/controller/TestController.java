@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.usermanagement.system.constant.SwaggerConstants.TestConstant.BASE_API_VALUE;
 import static com.usermanagement.system.constant.SwaggerConstants.TestConstant.TEST_OPERATION;
-import static com.usermanagement.system.constant.WebResourceKeyConstants.API_V1;
-import static com.usermanagement.system.constant.WebResourceKeyConstants.TestResourceConstant.*;
+import static com.usermanagement.system.constant.WebResourceKeyConstants.API;
+import static com.usermanagement.system.constant.WebResourceKeyConstants.TestResourceConstant.BASE_TEST_RESOURCE;
 
 /**
  * @author Ramesh Jamakatel on 8/21/2023
  */
 
 @RestController
-@RequestMapping(API_V1 + BASE_TEST_RESOURCE)
+@RequestMapping(API + BASE_TEST_RESOURCE)
 @Api(BASE_API_VALUE)
 public class TestController {
 
