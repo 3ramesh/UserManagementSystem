@@ -1,4 +1,4 @@
-package com.usermanagemetnsystem;
+package com.usermanagement.system;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
