@@ -1,6 +1,7 @@
 package com.usermanagement.system.utils;
 
 import com.usermanagement.system.dto.request.UserRequestDTO;
+import com.usermanagement.system.dto.request.UserUpdateRequestDTO;
 import com.usermanagement.system.dto.response.StatusResponseDTO;
 import com.usermanagement.system.model.User;
 
@@ -29,13 +30,11 @@ public class UserUtils {
         return user;
     }
 
-    public static User parseToUpdateUserDetails(UserRequestDTO requestDTO, User user){
+    public static User parseToUpdateUserDetails(UserUpdateRequestDTO updateRequestDTO, User user){
 
-        user.setUserName(requestDTO.getUserName());
-        user.setFirstName(requestDTO.getFirstName());
-        user.setLastName(requestDTO.getLastName());
-        user.setEmail(requestDTO.getEmail());
-        user.setDateOfBirth(requestDTO.getDateOfBirth());
+        user.setFirstName(updateRequestDTO.getFirstName());
+        user.setLastName(updateRequestDTO.getLastName());
+        user.setDateOfBirth(updateRequestDTO.getDateOfBirth());
         user.setStatus(UPDATED);
 
         return user;

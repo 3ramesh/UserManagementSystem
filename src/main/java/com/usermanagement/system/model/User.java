@@ -40,9 +40,6 @@ public class User implements Serializable {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @Column(name = "remarks")
-    private String remarks;
-
     @Column(name = "status")
     private Character status;
 
@@ -55,7 +52,6 @@ public class User implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", remarks='" + remarks + '\'' +
                 ", status=" + status +
                 '}';
     }

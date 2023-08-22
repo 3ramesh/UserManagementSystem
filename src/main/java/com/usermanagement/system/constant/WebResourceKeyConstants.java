@@ -16,11 +16,13 @@ public class WebResourceKeyConstants {
 
     public static final String LAST_NAME = "last-name";
 
+    public static final String OPERATION_BY_EMAIL = "email";
+
     public static final String FIRST_NAME_PATH_VARIABLE_BASE = "/{firstName}";
 
     public static final String LAST_NAME_PATH_VARIABLE_BASE = "/{lastName}";
 
-
+    public static final String USER_EMAIL_PATH_VARIABLE_BASE = "/{email}";
 
 
     public interface UserResourceConstant {

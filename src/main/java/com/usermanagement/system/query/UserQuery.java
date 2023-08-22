@@ -10,7 +10,7 @@ public class UserQuery {
             "SELECT" +
                     " u.id as userId," +
                     " u.userName as userName," +
-                    " u.firstName as firstName,"+
+                    " u.firstName as firstName," +
                     " u.lastName as lastName," +
                     " u.email as email," +
                     " u.dateOfBirth as dateOfBirth," +
@@ -23,7 +23,7 @@ public class UserQuery {
             "SELECT" +
                     " u.id as userId," +
                     " u.userName as userName," +
-                    " u.firstName as firstName,"+
+                    " u.firstName as firstName," +
                     " u.lastName as lastName," +
                     " u.email as email," +
                     " u.dateOfBirth as dateOfBirth," +
@@ -31,4 +31,30 @@ public class UserQuery {
                     " FROM User u" +
                     " WHERE u.status!='D'" +
                     " AND u.firstName =:firstName";
+
+    public static final String QUERY_TO_FETCH_USER_DETAILS_BY_LAST_NAME =
+            "SELECT" +
+                    " u.id as userId," +
+                    " u.userName as userName," +
+                    " u.firstName as firstName," +
+                    " u.lastName as lastName," +
+                    " u.email as email," +
+                    " u.dateOfBirth as dateOfBirth," +
+                    " u.status as status" +
+                    " FROM User u" +
+                    " WHERE u.status!='D'" +
+                    " AND u.lastName =:lastName";
+
+    public static final String QUERY_TO_FETCH_USER_DETAILS_BY_USER_EMAIL =
+            "SELECT" +
+                    " u.id as userId," +
+                    " u.userName as userName," +
+                    " u.firstName as firstName," +
+                    " u.lastName as lastName," +
+                    " u.email as email," +
+                    " u.dateOfBirth as dateOfBirth," +
+                    " u.status as status" +
+                    " FROM User u" +
+                    " WHERE u.status!='D'" +
+                    " AND u.email =:email";
 }

@@ -1,6 +1,7 @@
 package com.usermanagement.system.service.impl;
 
 import com.usermanagement.system.dto.request.UserRequestDTO;
+import com.usermanagement.system.dto.request.UserUpdateRequestDTO;
 import com.usermanagement.system.dto.response.StatusResponseDTO;
 import com.usermanagement.system.dto.response.UserListResponseDTO;
 import com.usermanagement.system.dto.response.UserResponseDTO;
@@ -15,15 +16,15 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import javax.validation.Validator;
-
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.function.Function;
 
 import static com.usermanagement.system.constant.CommonLogConstant.CONTENT_NOT_FOUND_BY_ID;
 import static com.usermanagement.system.constant.CommonLogConstant.USER;
 import static com.usermanagement.system.constant.ErrorMessageConstants.*;
-import static com.usermanagement.system.constant.StatusConstant.ACTIVE;
 import static com.usermanagement.system.utils.UserUtils.*;
-import static com.usermanagement.system.utils.UserUtils.parseToSaveUserResponseDTO;
 import static com.usermanagement.system.utils.ValidationUtils.validateConstraintViolation;
 
 /**
@@ -51,10 +52,13 @@ public class UserServiceImpl implements UserService {
 
         validateUnique(requestDTO.getUserName(), requestDTO.getEmail());
 
+        validDateOfBirth(requestDTO.getDateOfBirth());
+
         User user = saveUser(parseToSaveUser(requestDTO));
 
         return parseToSaveUserResponseDTO(user.getId());
     }
+
 
 
     @Override
@@ -74,11 +78,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public StatusResponseDTO update(UserRequestDTO requestDTO, Long id) {
+    public UserListResponseDTO fetchUserListByLastName(String lastName, Pageable pageable) {
+
+        UserListResponseDTO listResponseDTO = userRepository.fetchUserListByLastName(lastName, pageable);
+
+        return listResponseDTO;
+    }
+
+    @Override
+    public UserResponseDTO fetchDetailsByUserEmail(String email) {
+
+        UserResponseDTO responseDTO = userRepository.fetchDetailsByUserEmail(email);
+
+        return responseDTO;
+    }
+
+    @Override
+    public StatusResponseDTO update(UserUpdateRequestDTO updateRequestDTO, Long id) {
 
         User user = findById(id);
 
-        parseToUpdateUserDetails(requestDTO, user);
+        parseToUpdateUserDetails(updateRequestDTO, user);
 
         return parseToSaveUserResponseDTO(user.getId());
     }
@@ -108,6 +128,19 @@ public class UserServiceImpl implements UserService {
         }
 
 
+    }
+
+    private void validDateOfBirth(Date dateOfBirth) {
+
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate dateOfBirthLocal = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if(dateOfBirthLocal.isAfter(currentDate)) {
+
+            throw new BadRequestException(DATE_OF_BIRTH_NOT_FUTURE);
+
+        }
     }
 
     private User findById(Long userId) {

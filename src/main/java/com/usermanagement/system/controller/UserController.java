@@ -1,6 +1,7 @@
 package com.usermanagement.system.controller;
 
 import com.usermanagement.system.dto.request.UserRequestDTO;
+import com.usermanagement.system.dto.request.UserUpdateRequestDTO;
 import com.usermanagement.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,13 +56,28 @@ public class UserController {
         return ok(userService.fetchUserListByFirstName(firstName, pageable));
     }
 
+    @GetMapping(LAST_NAME + LAST_NAME_PATH_VARIABLE_BASE)
+    @ApiOperation(DETAILS_OPERATION_BY_LAST_NAME)
+    public ResponseEntity<?> fetchUserListByLastName(@PathVariable("lastName") String lastName,
+                                                     @RequestParam("page") int page,
+                                                     @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ok(userService.fetchUserListByLastName(lastName, pageable));
+    }
+
+    @GetMapping(OPERATION_BY_EMAIL + USER_EMAIL_PATH_VARIABLE_BASE)
+    @ApiOperation(DETAILS_OPERATION)
+    public ResponseEntity<?> fetchDetailsByUserEmail(@PathVariable("email") String email) {
+        return ok(userService.fetchDetailsByUserEmail(email));
+    }
+
     @PutMapping(USER_ID_PATH_VARIABLE_BASE)
     @ApiOperation(UPDATE_OPERATION)
     public ResponseEntity<?> update(@PathVariable("id") Long id,
-                                    @RequestBody UserRequestDTO requestDTO) {
+                                    @RequestBody UserUpdateRequestDTO updateRequestDTO) {
 
-        userService.update(requestDTO, id);
-        return ok().body(requestDTO);
+        userService.update(updateRequestDTO, id);
+        return ok().body(updateRequestDTO);
     }
 
     @DeleteMapping(USER_ID_PATH_VARIABLE_BASE)

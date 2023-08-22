@@ -16,4 +16,9 @@ public interface UserRepositoryCustom {
     UserResponseDTO fetchDetailsByUserName(String userName);
 
     UserListResponseDTO fetchUserListByFirstName(String firstName, Pageable pageable);
+
+    UserListResponseDTO fetchUserListByLastName(String lastName, Pageable pageable);
+
+    UserResponseDTO fetchDetailsByUserEmail(String email);
+
 }

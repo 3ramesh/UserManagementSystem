@@ -1,6 +1,7 @@
 package com.usermanagement.system.service;
 
 import com.usermanagement.system.dto.request.UserRequestDTO;
+import com.usermanagement.system.dto.request.UserUpdateRequestDTO;
 import com.usermanagement.system.dto.response.StatusResponseDTO;
 import com.usermanagement.system.dto.response.UserListResponseDTO;
 import com.usermanagement.system.dto.response.UserResponseDTO;
@@ -18,7 +19,11 @@ public interface UserService {
 
     UserListResponseDTO fetchUserListByFirstName(String firstName, Pageable pageable);
 
-    StatusResponseDTO update(UserRequestDTO requestDTO, Long id);
+    UserListResponseDTO fetchUserListByLastName(String lastName, Pageable pageable);
+
+    UserResponseDTO fetchDetailsByUserEmail(String email);
+
+    StatusResponseDTO update(UserUpdateRequestDTO updateRequestDTO, Long id);
 
     StatusResponseDTO delete(Long id);
 }
