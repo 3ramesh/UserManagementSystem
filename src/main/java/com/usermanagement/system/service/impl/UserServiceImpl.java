@@ -21,9 +21,10 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.function.Function;
 
-import static com.usermanagement.system.constant.CommonLogConstant.CONTENT_NOT_FOUND_BY_ID;
-import static com.usermanagement.system.constant.CommonLogConstant.USER;
+import static com.usermanagement.system.constant.CommonLogConstant.*;
 import static com.usermanagement.system.constant.ErrorMessageConstants.*;
+import static com.usermanagement.system.utils.DateUtils.getDifferenceBetweenTwoTime;
+import static com.usermanagement.system.utils.DateUtils.getTimeInMillisecondsFromLocalDate;
 import static com.usermanagement.system.utils.UserUtils.*;
 import static com.usermanagement.system.utils.ValidationUtils.validateConstraintViolation;
 
@@ -48,6 +49,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResponseDTO save(UserRequestDTO requestDTO) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(CREATING_PROCESS_STARTED, USER);
+
         validateConstraintViolation(validator.validate(requestDTO));
 
         validateUnique(requestDTO.getUserName(), requestDTO.getEmail());
@@ -56,15 +61,22 @@ public class UserServiceImpl implements UserService {
 
         User user = saveUser(parseToSaveUser(requestDTO));
 
+        log.info(CREATING_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
+
         return parseToSaveUserResponseDTO(user.getId());
     }
-
 
 
     @Override
     public UserResponseDTO fetchDetailsByUserName(String userName) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(RETRIEVING_BY_USERNAME_PROCESS_STARTED, USER);
+
         UserResponseDTO responseDTO = userRepository.fetchDetailsByUserName(userName);
+
+        log.info(RETRIEVING_BY_USERNAME_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
 
         return responseDTO;
     }
@@ -72,7 +84,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserListResponseDTO fetchUserListByFirstName(String firstName, Pageable pageable) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(RETRIEVING_LIST_BY_FIRST_NAME_PROCESS_STARTED, USER);
+
         UserListResponseDTO listResponseDTO = userRepository.fetchUserListByFirstName(firstName, pageable);
+
+        log.info(RETRIEVING_LIST_BY_FIRST_NAME_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
+
 
         return listResponseDTO;
     }
@@ -80,7 +99,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserListResponseDTO fetchUserListByLastName(String lastName, Pageable pageable) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(RETRIEVING_LIST_BY_LAST_NAME_PROCESS_STARTED, USER);
+
         UserListResponseDTO listResponseDTO = userRepository.fetchUserListByLastName(lastName, pageable);
+
+        log.info(RETRIEVING_LIST_BY_LAST_NAME_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
 
         return listResponseDTO;
     }
@@ -88,7 +113,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO fetchDetailsByUserEmail(String email) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(RETRIEVING_BY_EMAIL_PROCESS_STARTED, USER);
+
         UserResponseDTO responseDTO = userRepository.fetchDetailsByUserEmail(email);
+
+        log.info(RETRIEVING_BY_EMAIL_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
 
         return responseDTO;
     }
@@ -96,9 +127,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResponseDTO update(UserUpdateRequestDTO updateRequestDTO, Long id) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(UPDATING_PROCESS_STARTED, USER);
+
+        validateConstraintViolation(validator.validate(updateRequestDTO));
+
+        validDateOfBirth(updateRequestDTO.getDateOfBirth());
+
         User user = findById(id);
 
         parseToUpdateUserDetails(updateRequestDTO, user);
+
+        log.info(UPDATING_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
 
         return parseToSaveUserResponseDTO(user.getId());
     }
@@ -106,15 +147,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResponseDTO delete(Long id) {
 
+        Long startTime = getTimeInMillisecondsFromLocalDate();
+
+        log.info(DELETING_PROCESS_STARTED, USER);
+
         User user = findById(id);
 
         parseToDeleteUser(user);
+
+        log.info(DELETING_PROCESS_COMPLETED, USER, getDifferenceBetweenTwoTime(startTime));
 
         return parseToDeleteUserResponseDTO();
     }
 
 
-    private void validateUnique(String userName, String email){
+    private void validateUnique(String userName, String email) {
         User userByUserName = userRepository.findUserByUserName(userName).orElse(null);
 
         if (userByUserName != null) {
@@ -136,7 +183,7 @@ public class UserServiceImpl implements UserService {
 
         LocalDate dateOfBirthLocal = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        if(dateOfBirthLocal.isAfter(currentDate)) {
+        if (dateOfBirthLocal.isAfter(currentDate)) {
 
             throw new BadRequestException(DATE_OF_BIRTH_NOT_FUTURE);
 

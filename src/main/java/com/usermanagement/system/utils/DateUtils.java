@@ -1,6 +1,8 @@
 package com.usermanagement.system.utils;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -17,4 +19,14 @@ public class DateUtils {
 
         return Integer.valueOf(currentYear);
     }
+
+    public static Long getDifferenceBetweenTwoTime(Long startTime) {
+        return getTimeInMillisecondsFromLocalDate() - startTime;
+    }
+
+    public static Long getTimeInMillisecondsFromLocalDate() {
+        LocalDateTime localDate = LocalDateTime.now();
+        return Timestamp.valueOf(localDate).getTime();
+    }
+
 }
