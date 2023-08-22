@@ -26,4 +26,6 @@ public class UserResponseDTO implements Serializable {
     private String email;
 
     private Date dateOfBirth;
+
+    private Character status;
 }

@@ -3,6 +3,7 @@ package com.usermanagement.system.repository.custom;
 import com.usermanagement.system.dto.response.UserListResponseDTO;
 import com.usermanagement.system.dto.response.UserResponseDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +15,5 @@ public interface UserRepositoryCustom {
 
     UserResponseDTO fetchDetailsByUserName(String userName);
 
-    UserListResponseDTO fetchUserListByFirstName(String firstName);
+    UserListResponseDTO fetchUserListByFirstName(String firstName, Pageable pageable);
 }

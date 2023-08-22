@@ -7,6 +7,7 @@ import com.usermanagement.system.model.User;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.usermanagement.system.constant.StatusConstant.*;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
@@ -23,8 +24,35 @@ public class UserUtils {
         user.setLastName(requestDTO.getLastName());
         user.setEmail(requestDTO.getEmail());
         user.setDateOfBirth(requestDTO.getDateOfBirth());
+        user.setStatus(ACTIVE);
 
         return user;
+    }
+
+    public static User parseToUpdateUserDetails(UserRequestDTO requestDTO, User user){
+
+        user.setUserName(requestDTO.getUserName());
+        user.setFirstName(requestDTO.getFirstName());
+        user.setLastName(requestDTO.getLastName());
+        user.setEmail(requestDTO.getEmail());
+        user.setDateOfBirth(requestDTO.getDateOfBirth());
+        user.setStatus(UPDATED);
+
+        return user;
+    }
+
+    public static void parseToDeleteUser(User user){
+
+        user.setStatus(DELETED);
+    }
+
+    public static StatusResponseDTO parseToDeleteUserResponseDTO() {
+
+        StatusResponseDTO responseDTO = new StatusResponseDTO();
+        responseDTO.setResponseCode(OK.value());
+        responseDTO.setResponseStatus(OK);
+
+        return responseDTO;
     }
 
     public static StatusResponseDTO parseToSaveUserResponseDTO(Long userId) {

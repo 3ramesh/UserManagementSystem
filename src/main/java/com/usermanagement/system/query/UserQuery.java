@@ -13,9 +13,11 @@ public class UserQuery {
                     " u.firstName as firstName,"+
                     " u.lastName as lastName," +
                     " u.email as email," +
-                    " u.dateOfBirth as dateOfBirth" +
+                    " u.dateOfBirth as dateOfBirth," +
+                    " u.status as status" +
                     " FROM User u" +
-                    " WHERE u.userName =:userName";
+                    " WHERE u.status!='D'" +
+                    " AND u.userName =:userName";
 
     public static final String QUERY_TO_FETCH_USER_DETAILS_BY_FIRST_NAME =
             "SELECT" +
@@ -24,7 +26,9 @@ public class UserQuery {
                     " u.firstName as firstName,"+
                     " u.lastName as lastName," +
                     " u.email as email," +
-                    " u.dateOfBirth as dateOfBirth" +
+                    " u.dateOfBirth as dateOfBirth," +
+                    " u.status as status" +
                     " FROM User u" +
-                    " WHERE u.firstName =:firstName";
+                    " WHERE u.status!='D'" +
+                    " AND u.firstName =:firstName";
 }

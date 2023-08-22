@@ -10,6 +10,8 @@ public class WebResourceKeyConstants {
 
     public static final String USER_NAME_PATH_VARIABLE_BASE = "/{username}";
 
+    public static final String USER_ID_PATH_VARIABLE_BASE = "/{id}";
+
     public static final String FIRST_NAME = "first-name";
 
     public static final String LAST_NAME = "last-name";

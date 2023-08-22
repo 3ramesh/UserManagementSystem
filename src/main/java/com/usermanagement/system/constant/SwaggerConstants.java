@@ -20,8 +20,8 @@ public class SwaggerConstants {
 
         String DETAILS_OPERATION_BY_LAST_NAME = "Retrieve a list of users by last name";
 
-        String UPDATE_OPERATION = "Update existing user";
-        String DELETE_OPERATION = "Set user status as 'D' with specific remarks";
+        String UPDATE_OPERATION = "Update user information by ID";
+        String DELETE_OPERATION = "Delete a User by ID, Set user status as 'D'";
     }
 
     public interface TestConstant {
